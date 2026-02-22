@@ -1950,7 +1950,6 @@ dropZone.addEventListener('drop', (e) => {
   dropZone.classList.remove('dragover');
   importFiles(e.dataTransfer.files);
 });
-
 // ── INIT ──
 function init() {
   initPalette();
@@ -1968,7 +1967,19 @@ function init() {
   showToast('✦ KAWAII STUDIO v3 ✦');
 }
 
-init();
+window.addEventListener('DOMContentLoaded', init);
+  
+  // ── DROP ZONE (DOM ready safe) ──
+  const dropZone = document.getElementById('drop-zone');
+  if (dropZone) {
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      importFiles(e.dataTransfer.files);
+    });
+  }
 </script>
 </body>
 </html>
